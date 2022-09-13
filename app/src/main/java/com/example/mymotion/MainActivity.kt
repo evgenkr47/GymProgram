@@ -12,13 +12,14 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(binding.root)
-        GlobalScope.launch (Dispatchers.IO){
-            delay(1000)
-            withContext(Dispatchers.Main){
-                binding.motionLayout.transitionToEnd()
-            }
+        CoroutineScope(Dispatchers.Main).launch{
+            startMotion()
         }
-
-
     }
+
+    private suspend fun startMotion(){
+        delay(1000)
+        binding.motionLayout.transitionToEnd()
+    }
+
 }
